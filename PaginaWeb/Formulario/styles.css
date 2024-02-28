@@ -17,32 +17,32 @@ header {
 }
 
 #formulario {
-    max-width: 800px; /* Aumenté el ancho máximo para adaptarse a contenido más grande */
+    max-width: 800px; 
     margin: 20px auto;
     background-color: #fff;
-    padding: 30px; /* Incrementé el espacio interno para mayor claridad */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Hice la sombra un poco más pronunciada */
-    border-radius: 10px; /* Añadí bordes redondeados para un aspecto más suave */
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
+    border-radius: 10px; 
 }
 
 label {
     display: block;
-    margin-bottom: 10px; /* Aumenté el espacio inferior entre las etiquetas */
+    margin-bottom: 10px;
 }
 
 input, textarea, select {
     width: 100%;
-    padding: 10px; /* Aumenté el espacio interno para una apariencia más consistente */
-    margin-bottom: 20px; /* Incrementé el espacio inferior entre los elementos */
+    padding: 10px; 
+    margin-bottom: 20px; 
     box-sizing: border-box;
-    border: 1px solid #ccc; /* Añadí un borde para resaltar los campos */
-    border-radius: 5px; /* Bordes redondeados para una apariencia más suave */
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
 }
 
 button {
     background-color: #3498db;
     color: #fff;
-    padding: 12px 20px; /* Ajusté el relleno para un botón más grande */
+    padding: 12px 20px; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -50,12 +50,12 @@ button {
 
 footer {
     text-align: center;
-    padding: 15px; /* Aumenté el espacio interno del pie de página */
+    padding: 15px; 
     background-color: #333;
     color: #fff;
 }
 
-/* Estilo adicional para las opciones condicionadas */
+
 #labelOpcionesCondicionadas, #opcionesCondicionadas {
-    margin-top: 15px; /* Añadí un espacio superior para las opciones condicionadas */
+    margin-top: 15px; 
 }
