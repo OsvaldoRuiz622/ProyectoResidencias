@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <img src="/PaginaWeb/imagenes/banner.jpg" alt="Portada" style="max-width: 100%;">
+    </header>
+
+    <div id="formulario">
+        <h2>Centro de Computo del ITL</h2>
+        <h2>Sistema de Tickets de soporte tecnico</h2>
+        <h2>Cuestionario</h2>
+        <form action="#" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="tipoUsuario">Tipo de Usuario:</label>
+            <select id="tipoUsuario" name="tipoUsuario" required required onchange="mostrarOpciones(this.value)">
+                <option value="Docente">Docente</option>
+                <option value="Subdirector">Subdirector</option>
+                <option value="Director">Director</option>
+                <option value="Personal Administrativo">Personal Administrativo</option>
+                <option value="Jefe de Departamento">Jefe de Departamento</option>
+                <option value="Tecnico Docente">Tecnico Docente</option>
+            </select>
+
+             <label for="opcionesCondicionadas" id="labelOpcionesCondicionadas" style="display: none;">Opciones Condicionadas:</label>
+             <select id="opcionesCondicionadas" name="opcionesCondicionadas" style="display: none;">
+             </select>
+
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>Contacto:</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+
+</body>
+</html>
