@@ -33,19 +33,38 @@
                 <option value="Tecnico Docente">Tecnico Docente</option>
             </select>
 
-             <label for="opcionesCondicionadas" id="labelOpcionesCondicionadas" style="display: none;">Opciones Condicionadas:</label>
-             <select id="opcionesCondicionadas" name="opcionesCondicionadas" style="display: none;">
+             <label for="opcionesCondicionadas" id="labelOpcionesCondicionadas" style="display: none;">Subdirección:</label>
+             <select id="opcionesCondicionadas" name="opcionesCondicionadas" required required onchange="mostrarOpcionesDos(this.value)" style="display: none;">
              </select>
 
-            <label for="mensaje">Mensaje:</label>
-            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+             <label for="opcionesCondicionadasDos" id="labelOpcionesCondicionadasDos" style="display: none;">Área:</label>
+             <select id="opcionesCondicionadasDos" name="opcionesCondicionadasDos" style="display: none;">
+             </select>
 
-            <button type="submit">Enviar</button>
+            <!-- <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>-->
+
+            <button type="submit">Siguiente</button>
         </form>
     </div>
 
     <footer>
-        <p>Contacto:</p>
+        <div class="footer-section">
+            <p>Dirección:</p>
+            <p>
+                Campus I -Av. Tecnológico s/n, Fraccionamiento Industrial Julián de Obregón, 37290 León, Gto.
+                Campus II – Blvd. Juan Alonso de Torres Pte. 3542, San José de Piletas, 37316 León, Gto.</p>
+           
+        </div>
+        <div class="footer-section">
+            <p>Contacto:</p>
+            <p>Email:
+                soportetecnico@leon.tecnm.mx
+                
+            </p>
+            <p>Conmutador:
+                4777105200 Ext 1000</p>
+        </div>
     </footer>
 
     <script src="scripts.js"></script>
