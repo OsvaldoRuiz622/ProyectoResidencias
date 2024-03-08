@@ -60,8 +60,8 @@ footer {
 
 /* Estilo adicional para las secciones (opcional) */
 .footer-section {
-width: 48%; /* Ajusta el ancho según tus necesidades */
-text-align: center; /* Centra el texto horizontalmente */
+  width: 48%; /* Ajusta el ancho según tus necesidades */
+  text-align: center; /* Centra el texto horizontalmente */
 }
 
 #labelOpcionesCondicionadas,

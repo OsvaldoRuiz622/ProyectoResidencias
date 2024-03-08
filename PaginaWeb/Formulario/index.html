@@ -24,7 +24,7 @@
             <input type="email" id="email" name="email" required>
 
             <label for="tipoUsuario">Tipo de Usuario:</label>
-            <select id="tipoUsuario" name="tipoUsuario" required required onchange="mostrarOpciones(this.value)">
+            <select id="tipoUsuario" name="tipoUsuario" required onchange="mostrarOpciones(this.value)">
                 <option value="Director">Director</option>
                 <option value="Docente">Docente</option>
                 <option value="Subdirector">Subdirector</option>
@@ -32,19 +32,19 @@
                 <option value="Jefe de Departamento">Jefe de Departamento</option>
                 <option value="Tecnico Docente">Tecnico Docente</option>
             </select>
-
-             <label for="opcionesCondicionadas" id="labelOpcionesCondicionadas" style="display: none;">Área:</label>
-             <select id="opcionesCondicionadas" name="opcionesCondicionadas" required required onchange="mostrarOpcionesDos(this.value)" style="display: none;">
-             </select>
-
-             <label for="opcionesCondicionadasDos" id="labelOpcionesCondicionadasDos" style="display: none;">Área:</label>
-             <select id="opcionesCondicionadasDos" name="opcionesCondicionadasDos" style="display: none;">
-             </select>
-
+            
+            <label for="opcionesCondicionadas" id="labelOpcionesCondicionadas" style="display: none;">Área:</label>
+            <select id="opcionesCondicionadas" name="opcionesCondicionadas" style="display: none;">
+            </select>
+            
+            
 
              <label for="tipoProblema">Tipo de Problema:</label>
-            <select id="tipoProblemaUsuario" name="tipoProblema" onchange="mostrarOpcionesTipoProblema(this.value)">
-                <option value="Cuenta Institucional">Cuenta Institucional</option>
+            <select id="tipoProblema" name="tipoProblema" required onchange="mostrarOpcionesTres(this.value)">
+                <option value="Correo Institucional">Correo Institucional</option>
+                <option value="Cuenta Cetech">Cuenta Cetech</option>
+                <option value="Cuenta Office">Cuenta Office</option>
+                <option value="Cuenta Aula">Cuenta Aula Virtual</option>
                 <option value="InternetS">Internet</option>
                 <option value="Impresoras">Impresoras</option>
                 <option value="Telefonia">Telefonía</option>
@@ -54,10 +54,8 @@
                 <option value="Software">Software General</option>
             </select>
 
-            <!-- <label for="mensaje">Mensaje:</label>
-            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>-->
+            <button type="submit" id="btnSiguiente">Siguiente</button>
 
-            <button type="submit">Siguiente</button>
         </form>
     </div>
 
