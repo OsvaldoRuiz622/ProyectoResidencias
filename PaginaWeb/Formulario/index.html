@@ -17,6 +17,7 @@
         <h2>Centro de Computo del ITL</h2>
         <h2>Cuestionario</h2>
         <form action="#" method="post">
+
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
 
@@ -39,8 +40,8 @@
             
             
 
-             <label for="tipoProblema">Tipo de Problema:</label>
-            <select id="tipoProblema" name="tipoProblema" required onchange="mostrarOpcionesTres(this.value)">
+            <label for="tipoProblema">Tipo de Problema:</label>
+            <select id="tipoProblema" name="tipoProblema" required >
                 <option value="Correo Institucional">Correo Institucional</option>
                 <option value="Cuenta Cetech">Cuenta Cetech</option>
                 <option value="Cuenta Office">Cuenta Office</option>
@@ -54,9 +55,10 @@
                 <option value="Software">Software General</option>
             </select>
 
-            <button type="submit" id="btnSiguiente">Siguiente</button>
-
+            
+            
         </form>
+        <button type="submit" id="btnSiguiente">Siguiente</button>
     </div>
 
     <footer>

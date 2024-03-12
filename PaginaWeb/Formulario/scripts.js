@@ -35,29 +35,30 @@ function agregarOpciones(opciones) {
 }
 
 
-function mostrarOpcionesTipoProblema(tipoProblema, botonId) {
-    var boton = document.getElementById(botonId);
-    
-    // URL de redirección para cada tipo de problema
-    var redirectURL;
-    switch (tipoProblema) {
-        case 'Cuenta Institucional':
-        case 'InternetS':
-        case 'Software':
-            redirectURL = 'formularioSoftware.html';
-            break;
-        default:
-            redirectURL = 'formularioHardware.html';
+
+
+document.getElementById("btnSiguiente").addEventListener("click", function(event) {
+    event.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+    var nombre = document.getElementById("nombre").value.trim();
+    var email = document.getElementById("email").value.trim();
+
+    if (nombre === "" || email === "") {
+        alert("Por favor, completa todos los campos antes de continuar.");
+    } else {
+        var problemaSeleccionado = document.getElementById("tipoProblema").value;
+        if (problemaSeleccionado === "Correo Institucional" || 
+            problemaSeleccionado === "Cuenta Cetech" || 
+            problemaSeleccionado === "Cuenta Office" || 
+            problemaSeleccionado === "Cuenta Aula" || 
+            problemaSeleccionado === "InternetS" || 
+            problemaSeleccionado === "Software") {
+            window.location.href = "formularioSoftware.html";
+        } else {
+            window.location.href = "formularioHardware.html";
+        }
     }
-
-    // Agregar el evento de clic al botón para la redirección
-    boton.addEventListener('click', function () {
-        window.location.href = redirectURL;
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    var tipoProblema = document.getElementById('tipoProblemaUsuario').value;
-
-    mostrarOpcionesTipoProblema(tipoProblema, 'btnSiguiente');
 });
+
+
+
