@@ -1,9 +1,8 @@
 Create database SistemaTickets
 
-
 USE SistemaTickets
 
-Drop table formulario_software;
+Drop table Operador;
 
 Create Table solicitante (
 	id_solicitante INT PRIMARY KEY IDENTITY(1,1),
@@ -45,7 +44,8 @@ Create table formulario_hardware (
 
 Create table Operador (
 	id_operador INT PRIMARY KEY IDENTITY(1,1),
-	nombre_operador VARCHAR (50) NOT NULL,
+	usuario VARCHAR (50) NOT NULL,
+	contraseña VARCHAR (50) NOT NULL,
 	cargo VARCHAR (50) NOT NULL
 );
 
