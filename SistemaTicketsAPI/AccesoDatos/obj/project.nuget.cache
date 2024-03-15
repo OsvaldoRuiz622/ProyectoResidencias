@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "zAYvev37dsDi2gnreGmRJKOJgRI5OFlxa6ZOGjhLHuis+TNiKXuFeuXxOOGFZlV4/ZBiU4vdtI5a4/bJoM96CA==",
+  "dgSpecHash": "7uOWg3bjyVcGQmwoR7I0oWoBXOmR6Nn5NK+V7aTmLhxjg+cdN6TKZqt6jtgrYNRJNQHXzjYk/rweBJMoSKlRnw==",
   "success": true,
   "projectFilePath": "C:\\Users\\osval\\Desktop\\GitProyect\\ProyectoResidencias\\SistemaTicketsAPI\\AccesoDatos\\AccesoDatos.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\osval\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\osval\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\osval\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
-    "C:\\Users\\osval\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.14\\microsoft.aspnetcore.openapi.7.0.14.nupkg.sha512",
+    "C:\\Users\\osval\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
     "C:\\Users\\osval\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\osval\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\osval\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",

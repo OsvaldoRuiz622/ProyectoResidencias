@@ -21,13 +21,13 @@ public partial class FormularioHardware
 
     public string? ObservacionPost { get; set; }
 
-    public DateTime? FechaPre { get; set; }
+    public DateTime FechaPre { get; set; }
 
-    public DateTime? FechaPost { get; set; }
+    public DateTime FechaPost { get; set; }
 
-    public int? IdSolicitante { get; set; }
+    public int IdSolicitante { get; set; }
 
-    public int? IdOperador { get; set; }
+    public int IdOperador { get; set; }
 
     public virtual Operador? IdOperadorNavigation { get; set; }
 
