@@ -33,29 +33,64 @@ function agregarOpciones(opciones) {
 }
 
 
+function agregarOpciones(opciones) {
+    opciones.forEach(function (opcion) {
+        var option = document.createElement('option');
+        option.value = opcion;
+        option.textContent = opcion;
+        opcionesCondicionadas.appendChild(option);
+    });
+}
 
+document.getElementById('btnSiguiente').addEventListener('click', function() {
+    // Obtener valores del formulario
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const tipoUsuario = document.getElementById('tipoUsuario').value;
+    const area = document.getElementById('opcionesCondicionadas').value;
+    const tipoProblema = document.getElementById('tipoProblema').value;
 
-document.getElementById("btnSiguiente").addEventListener("click", function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe automáticamente
+    // Construir objeto de datos a enviar
+    const datos = {
+        nombreSolicitante: nombre,
+        correo: email,
+        tipoSolicitante: tipoUsuario,
+        area: area,
+        tipoFallo: tipoProblema
+    };
 
-    var nombre = document.getElementById("nombre").value.trim();
-    var email = document.getElementById("email").value.trim();
-
-    if (nombre === "" || email === "") {
-        alert("Por favor, completa todos los campos antes de continuar.");
-    } else {
-        var problemaSeleccionado = document.getElementById("tipoProblema").value;
-        if (problemaSeleccionado === "Correo Institucional" || 
-            problemaSeleccionado === "Cuenta Cetech" || 
-            problemaSeleccionado === "Cuenta Office" || 
-            problemaSeleccionado === "Cuenta Aula" || 
-            problemaSeleccionado === "InternetS" || 
-            problemaSeleccionado === "Software") {
+    // Realizar la petición POST
+    fetch('http://localhost:5213/api/solicitante', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('La petición ha fallado');
+        }
+        // Redirigir la página según la selección del usuario
+        if (tipoProblema === "Correo Institucional" || 
+            tipoProblema === "Cuenta Cetech" || 
+            tipoProblema === "Cuenta Office" || 
+            tipoProblema === "Cuenta Aula" || 
+            tipoProblema === "InternetS" || 
+            tipoProblema === "Software") {
             window.location.href = "formularioSoftware.html";
         } else {
             window.location.href = "formularioHardware.html";
         }
-    }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Respuesta del servidor:', data);
+        // Aquí puedes manejar la respuesta del servidor, si es necesario
+    })
+    .catch(error => {
+        console.error('Error al enviar datos:', error);
+    });
 });
 
 

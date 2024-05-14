@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obtener datos de API</title>
+</head>
+<body>
+    <h1>Datos del formulario de software</h1>
+    <div id="datosFormulario"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Hacer la petición GET a la API
+            fetch('http://localhost:5213/api/solicitantes')
+                .then(response => {
+                    // Verificar si la petición fue exitosa
+                    if (!response.ok) {
+                        throw new Error('La petición ha fallado');
+                    }
+                    // Convertir la respuesta a JSON
+                    return response.json();
+                })
+                .then(data => {
+                    // Mostrar los datos en el elemento con id "datosFormulario"
+                    document.getElementById('datosFormulario').innerHTML = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    // Capturar y manejar errores
+                    console.error('Error al obtener los datos:', error);
+                });
+        });
+    </script>
+</body>
+</html>
