@@ -13,10 +13,33 @@ namespace WebApi.Controllers
         private FormularioSoftwareDAO formularioSoftwareDAO = new FormularioSoftwareDAO();
 
         [HttpGet("formulariosoftware")]
-        public List<FormularioSoftware> GetFormulariosSoftware()
+        public List<dynamic> GetFormulariosSoftware()
         {
-            return formularioSoftwareDAO.SeleccionarTodos();
+            var formulariosSoftware = new List<dynamic>();
+            var formularioSoftwareList = formularioSoftwareDAO.SeleccionarTodos();
+
+            foreach (var formularioSoftware in formularioSoftwareList)
+            {
+                var solicitante = formularioSoftwareDAO.ObtenerSolicitantePorId(formularioSoftware.IdSolicitante);
+                var formularioSoftwareDTO = new
+                {
+                    formularioSoftware.IdFormularioSoftware,
+                    formularioSoftware.Descripcion,
+                    formularioSoftware.Imagen,
+                    formularioSoftware.FechaPre,
+                    formularioSoftware.FechaPost,
+                    Solicitante = new
+                    {
+                        solicitante.NombreSolicitante,
+                        solicitante.TipoSolicitante
+                    }
+                };
+                formulariosSoftware.Add(formularioSoftwareDTO);
+            }
+
+            return formulariosSoftware;
         }
+
 
         [HttpGet("formulariosoftware/{id}")]
         public IActionResult GetFormularioSoftware(int id)

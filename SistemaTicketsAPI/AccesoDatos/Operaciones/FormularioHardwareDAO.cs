@@ -16,15 +16,69 @@ namespace AccesoDatos.Operaciones
         }
 
         // Método para seleccionar todos los formularios de hardware
-        public List<FormularioHardware> SeleccionarTodos()
+        public List<dynamic> SeleccionarTodos()
         {
-            return contexto.FormularioHardwares.ToList();
+            var formulariosHardware = new List<dynamic>();
+            var formularioHardwareList = contexto.FormularioHardwares.ToList();
+
+            foreach (var formularioHardware in formularioHardwareList)
+            {
+                var solicitante = ObtenerSolicitantePorId(formularioHardware.IdSolicitante);
+                var formularioHardwareDTO = new
+                {
+                    formularioHardware.IdFormularioHardware,
+                    formularioHardware.Cantidad,
+                    formularioHardware.Marca,
+                    formularioHardware.NoSerie,
+                    formularioHardware.Descripcion,
+                    formularioHardware.Condicion,
+                    formularioHardware.ObservacionPre,
+                    formularioHardware.ObservacionPost,
+                    formularioHardware.FechaPre,
+                    formularioHardware.FechaPost,
+                    Solicitante = new
+                    {
+                        solicitante.NombreSolicitante,
+                        solicitante.TipoSolicitante
+                    }
+                };
+                formulariosHardware.Add(formularioHardwareDTO);
+            }
+
+            return formulariosHardware;
         }
 
         // Método para seleccionar un formulario de hardware en específico por ID
-        public FormularioHardware SeleccionarPorId(int id)
+        public dynamic SeleccionarPorId(int id)
         {
-            return contexto.FormularioHardwares.FirstOrDefault(fh => fh.IdFormularioHardware == id);
+            var formularioHardware = contexto.FormularioHardwares.FirstOrDefault(fh => fh.IdFormularioHardware == id);
+            if (formularioHardware != null)
+            {
+                var solicitante = ObtenerSolicitantePorId(formularioHardware.IdSolicitante);
+                var formularioHardwareDTO = new
+                {
+                    formularioHardware.IdFormularioHardware,
+                    formularioHardware.Cantidad,
+                    formularioHardware.Marca,
+                    formularioHardware.NoSerie,
+                    formularioHardware.Descripcion,
+                    formularioHardware.Condicion,
+                    formularioHardware.ObservacionPre,
+                    formularioHardware.ObservacionPost,
+                    formularioHardware.FechaPre,
+                    formularioHardware.FechaPost,
+                    Solicitante = new
+                    {
+                        solicitante.NombreSolicitante,
+                        solicitante.TipoSolicitante
+                    }
+                };
+                return formularioHardwareDTO;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // Método para insertar un nuevo formulario de hardware
@@ -109,6 +163,12 @@ namespace AccesoDatos.Operaciones
                 // Manejar errores aquí
                 return false;
             }
+        }
+
+        // Método para obtener un solicitante por su ID
+        private Solicitante ObtenerSolicitantePorId(int id)
+        {
+            return contexto.Solicitantes.FirstOrDefault(s => s.IdSolicitante == id);
         }
     }
 }

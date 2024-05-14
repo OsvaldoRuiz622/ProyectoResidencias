@@ -13,7 +13,7 @@ namespace WebApi.Controllers
         private FormularioHardwareDAO formularioHardwareDAO = new FormularioHardwareDAO();
 
         [HttpGet("formulariohardware")]
-        public List<FormularioHardware> GetFormulariosHardware()
+        public List<dynamic> GetFormulariosHardware()
         {
             return formularioHardwareDAO.SeleccionarTodos();
         }
@@ -31,6 +31,7 @@ namespace WebApi.Controllers
                 return NotFound("Formulario de hardware no encontrado.");
             }
         }
+
 
         [HttpPost("formulariohardware")]
         public IActionResult InsertarFormularioHardware([FromBody] FormularioHardware formularioHardware)

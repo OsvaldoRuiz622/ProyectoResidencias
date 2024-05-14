@@ -100,5 +100,11 @@ namespace AccesoDatos.Operaciones
                 return false;
             }
         }
+
+        // Método para obtener un solicitante por su ID
+        public Solicitante ObtenerSolicitantePorId(int id)
+        {
+            return contexto.Solicitantes.FirstOrDefault(s => s.IdSolicitante == id);
+        }
     }
 }
