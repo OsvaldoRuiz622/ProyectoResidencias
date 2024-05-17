@@ -1,50 +1,146 @@
 import tkinter as tk
 from tkinter import ttk, Menu
+import requests
+import matplotlib.pyplot as plt
 
-class Estadisticas(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.parent = parent
+class Estadisticas(tk.Tk):
+    def __init__(self):
+        super().__init__()
         self.title("Estadísticas")
         self.geometry("400x150") 
 
-        # Create a split button with 5 options
-        self.split_button = ttk.Menubutton(self, text="Selecciona una opción")
-        self.split_button.pack(fill="both", expand=True, padx=20, pady=20)
+        self.software_menu = Menu(self, tearoff=0)
+        self.hardware_menu = Menu(self, tearoff=0)
 
-        # Create a menu for the split button
-        self.menu = Menu(self.split_button, tearoff=0)
-        self.split_button["menu"] = self.menu
+        self.software_menu.add_command(label="Tipo de Solicitante", command=lambda: self.open_new_window("Tipo de Solicitante", "software"))
+        self.software_menu.add_command(label="Área", command=lambda: self.open_new_window("Área", "software"))
+        self.software_menu.add_command(label="Tipo de Fallo", command=lambda: self.open_new_window("Tipo de Fallo", "software"))
 
-        # Add options to the menu
-        self.menu.add_command(label="Departamento", command=lambda: self.set_text("Departamento"))
-        self.menu.add_command(label="Carrera", command=lambda: self.set_text("Carrera"))
-        self.menu.add_command(label="Peticiones Software", command=lambda: self.set_text("Peticiones Software"))
-        self.menu.add_command(label="Peticiones Hardware", command=lambda: self.set_text("Peticiones Hardware"))
+        self.hardware_menu.add_command(label="Tipo de Solicitante", command=lambda: self.open_new_window("Tipo de Solicitante", "hardware"))
+        self.hardware_menu.add_command(label="Área", command=lambda: self.open_new_window("Área", "hardware"))
+        self.hardware_menu.add_command(label="Tipo de Fallo", command=lambda: self.open_new_window("Tipo de Fallo", "hardware"))
 
-         # Create a button to open a new window
+        self.software_button = ttk.Menubutton(self, text="Software", menu=self.software_menu)
+        self.software_button.pack(fill="both", expand=True, padx=20, pady=5)
+        self.hardware_button = ttk.Menubutton(self, text="Hardware", menu=self.hardware_menu)
+        self.hardware_button.pack(fill="both", expand=True, padx=20, pady=5)
 
-        self.new_window_button = tk.Button(self, text="Ir a estadistica", command=self.open_new_window)
-
-        self.new_window_button.pack(fill="both", expand=True, padx=20, pady=20)
-
-
-        # Initialize the text of the Menubutton
-
-        self.set_text("Selecciona una opción")
-
-
-    def set_text(self, text):
-        # Set the text of the Menubutton and configure it to display the new text
-        self.split_button.configure(text=text)
-        self.split_button.state(['!disabled'])
-
-    def open_new_window(self):
-        # Create a new window
+    def open_new_window(self, option, category):
         nueva_ventana = tk.Toplevel(self)
-        nueva_ventana.title("Nueva ventana")
-        nueva_ventana.geometry("300x200")
+        nueva_ventana.title("Estadísticas - {}".format(option))
+        nueva_ventana.geometry("400x300")
 
-        # Add some content to the new window
-        label = tk.Label(nueva_ventana, text="Esta es una nueva ventana")
-        label.pack(fill="both", expand=True, padx=20, pady=20)      
+        if option == "Tipo de Solicitante":
+            if category == "software":
+                self.display_solicitante_statistics(nueva_ventana, "software")
+            else:
+                self.display_solicitante_statistics(nueva_ventana, "hardware")
+        elif option == "Área":
+            if category == "software":
+                self.display_area_statistics(nueva_ventana, "software")
+            else:
+                self.display_area_statistics(nueva_ventana, "hardware")
+        elif option == "Tipo de Fallo":
+            if category == "software":
+                self.display_fallo_statistics(nueva_ventana, "software")
+            else:
+                self.display_fallo_statistics(nueva_ventana, "hardware")
+
+    def fetch_data_from_api(self, url):
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Error al obtener datos de la API")
+            return []
+
+    def display_solicitante_statistics(self, window, category):
+        if category == "software":
+            url = "http://localhost:5118/api/solicitantessoft"
+        else:
+            url = "http://localhost:5118/api/solicitanteshard"
+
+        data = self.fetch_data_from_api(url)
+
+        
+        count_dict = {}
+        for item in data:
+            tipo_solicitante = item.get("tipoSolicitanteSoft" if category == "software" else "tipoSolicitanteHard")
+            if tipo_solicitante in count_dict:
+                count_dict[tipo_solicitante] += 1
+            else:
+                count_dict[tipo_solicitante] = 1
+
+        
+        label = tk.Label(window, text=f"Estadísticas de Tipo de Solicitante {'(Software)' if category == 'software' else '(Hardware)'}")
+        label.pack()
+
+        
+        plt.bar(count_dict.keys(), count_dict.values())
+        plt.xlabel("Tipo de Solicitante")
+        plt.ylabel("Cantidad")
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.show()
+
+    def display_area_statistics(self, window, category):
+        if category == "software":
+            url = "http://localhost:5118/api/solicitantessoft"
+        else:
+            url = "http://localhost:5118/api/solicitanteshard"
+
+        data = self.fetch_data_from_api(url)
+
+        
+        count_dict = {}
+        for item in data:
+            area = item.get("areaSoft" if category == "software" else "areaHard")
+            if area in count_dict:
+                count_dict[area] += 1
+            else:
+                count_dict[area] = 1
+
+        
+        label = tk.Label(window, text=f"Estadísticas de Área {'(Software)' if category == 'software' else '(Hardware)'}")
+        label.pack()
+
+        
+        plt.bar(count_dict.keys(), count_dict.values())
+        plt.xlabel("Área")
+        plt.ylabel("Cantidad")
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.show()
+
+    def display_fallo_statistics(self, window, category):
+        if category == "software":
+            url = "http://localhost:5118/api/solicitantessoft"
+        else:
+            url = "http://localhost:5118/api/solicitanteshard"
+
+        data = self.fetch_data_from_api(url)
+
+        
+        count_dict = {}
+        for item in data:
+            tipo_fallo = item.get("tipoFalloSoft" if category == "software" else "tipoFalloHard")
+            if tipo_fallo in count_dict:
+                count_dict[tipo_fallo] += 1
+            else:
+                count_dict[tipo_fallo] = 1
+
+       
+        label = tk.Label(window, text=f"Estadísticas de Tipo de Fallo {'(Software)' if category == 'software' else '(Hardware)'}")
+        label.pack()
+
+        
+        plt.bar(count_dict.keys(), count_dict.values())
+        plt.xlabel("Tipo de Fallo")
+        plt.ylabel("Cantidad")
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.show()
+
+if __name__ == "__main__":
+    app = Estadisticas()
+    app.mainloop()
