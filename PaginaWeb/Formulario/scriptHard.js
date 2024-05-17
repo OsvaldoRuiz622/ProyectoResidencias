@@ -1,8 +1,8 @@
 document.getElementById('btnEnviar2').addEventListener('click', function(event) {
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
-
-    // Realizar la petición GET para obtener la lista de solicitantes
-    fetch('http://localhost:5213/api/solicitantes')
+  
+    // Realizar la petición GET para obtener la lista de solicitantes de hardware
+    fetch('http://localhost:5118/api/solicitanteshard')
     .then(response => {
         if (!response.ok) {
             throw new Error('La petición ha fallado');
@@ -10,52 +10,77 @@ document.getElementById('btnEnviar2').addEventListener('click', function(event) 
         return response.json();
     })
     .then(data => {
-        // Obtener el último ID ingresado
-        const ultimoID = data[data.length - 1].idSolicitante;
-
-        // Imprimir el último ID en la consola para probar
-        console.log('Último ID ingresado:', ultimoID);
-
-        // Obtener valores del formulario
-        const descripcion = document.getElementById('mensaje').value;
-        const condicion = document.getElementById('condicionTecnica').value;
-        const marca = document.getElementById('marca').value;
-        const inventario = document.getElementById('inventario').value;
-
-        // Construir objeto de datos a enviar
-        const datos = {
-            cantidad: '1',
-            marca: marca,
-            noSerie: inventario,
-            descripcion: descripcion,
-            condicion: condicion,
-            observacionPre: '',
-            observacionPost: '',
-            fechaPre: new Date().toISOString(),
-            fechaPost: new Date().toISOString(),
-            idSolicitante: ultimoID, // Usar el último ID obtenido
-            idOperador: 1 // ID predeterminado del operador
-        };
-
-        // Realizar la petición POST
-        return fetch('http://localhost:5213/api/formulariohardware', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(datos)
-        });
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('La petición ha fallado');
+        // Verificar si hay datos en la respuesta
+        if (data && data.length > 0) {
+            // Ordenar los datos por ID de manera descendente
+            const sortedData = data.sort((a, b) => b.idSolicitanteHard - a.idSolicitanteHard);
+            console.log(sortedData);
+            // Obtener el último ID
+            const ultimoID = sortedData[0].idSolicitanteHard;
+            console.log('Último ID ingresado:', ultimoID);
+            
+            // Obtener valores del formulario y enviar el formulario
+            const marca = document.getElementById('marca').value;
+            const noSerie = document.getElementById('inventario').value;
+            const descripcion = document.getElementById('mensaje').value;
+            const condicion = document.getElementById('condicionTecnica').value;
+  
+            // Construir objeto de datos a enviar
+            const formData = {
+                cantidad: "1",
+                marca: marca,
+                noSerie: noSerie,
+                descripcionHard: descripcion,
+                condicion: condicion,
+                observacionPre: "Escriba su Observacion",
+                observacionPost: "Escriba su Observacion",
+                fechaPreHard: new Date().toISOString(),
+                fechaPostHard: new Date().toISOString(),
+                estatusHard: false,
+                idSolicitanteHard: ultimoID, // Usar el último ID obtenido
+                idOperador: 1 // ID predeterminado del operador
+            };
+  
+            // Realizar la petición POST
+            fetch('http://localhost:5118/api/formularioshardware', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.log('Redireccionando...');
+                    window.location.href = 'index.html';
+                    throw new Error('La petición ha fallado');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Redireccionando...');
+                window.location.href = 'index.html';
+                console.log('Respuesta del servidor:', data);
+                alert('El formulario se ha enviado correctamente.');
+  
+                // Redirigir al usuario a index.html
+                window.location.href = 'index.html';
+            })
+            .catch(error => {
+                console.log('Redireccionando...');
+                window.location.href = 'index.html';
+                console.error('Error al realizar la solicitud POST:', error);
+                // Aquí puedes manejar el error si es necesario
+            });
+        } else {
+            throw new Error('La lista de solicitantes está vacía');
         }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Respuesta del servidor:', data);
     })
     .catch(error => {
-        console.error('Error al enviar datos:', error);
+        console.log('Redireccionando...');
+        window.location.href = 'index.html';
+        console.error('Error al obtener la lista de solicitantes:', error);
+        // Aquí puedes manejar el error si es necesario
     });
-});
+  });
+  

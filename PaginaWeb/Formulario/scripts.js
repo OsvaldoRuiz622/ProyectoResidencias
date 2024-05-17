@@ -50,17 +50,32 @@ document.getElementById('btnSiguiente').addEventListener('click', function() {
     const area = document.getElementById('opcionesCondicionadas').value;
     const tipoProblema = document.getElementById('tipoProblema').value;
 
-    // Construir objeto de datos a enviar
-    const datos = {
-        nombreSolicitante: nombre,
-        correo: email,
-        tipoSolicitante: tipoUsuario,
-        area: area,
-        tipoFallo: tipoProblema
-    };
+    let url = '';
+    let datos = {};
+
+    // Verificar tipo de problema y ajustar URL y datos
+    if (["Correo Institucional", "Cuenta Cetech", "Cuenta Office", "Cuenta Aula", "InternetS", "Software"].includes(tipoProblema)) {
+        url = 'http://localhost:5118/api/solicitantessoft';
+        datos = {
+            nombreSolicitanteSoft: nombre,
+            correoSoft: email,
+            tipoSolicitanteSoft: tipoUsuario,
+            areaSoft: area,
+            tipoFalloSoft: tipoProblema
+        };
+    } else {
+        url = 'http://localhost:5118/api/solicitanteshard';
+        datos = {
+            nombreSolicitanteHard: nombre,
+            correoHard: email,
+            tipoSolicitanteHard: tipoUsuario,
+            areaHard: area,
+            tipoFalloHard: tipoProblema
+        };
+    }
 
     // Realizar la petición POST
-    fetch('http://localhost:5213/api/solicitante', {
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -72,12 +87,7 @@ document.getElementById('btnSiguiente').addEventListener('click', function() {
             throw new Error('La petición ha fallado');
         }
         // Redirigir la página según la selección del usuario
-        if (tipoProblema === "Correo Institucional" || 
-            tipoProblema === "Cuenta Cetech" || 
-            tipoProblema === "Cuenta Office" || 
-            tipoProblema === "Cuenta Aula" || 
-            tipoProblema === "InternetS" || 
-            tipoProblema === "Software") {
+        if (["Correo Institucional", "Cuenta Cetech", "Cuenta Office", "Cuenta Aula", "InternetS", "Software"].includes(tipoProblema)) {
             window.location.href = "formularioSoftware.html";
         } else {
             window.location.href = "formularioHardware.html";
