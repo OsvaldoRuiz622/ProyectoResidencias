@@ -2,7 +2,7 @@ Create database SistemaTickets
 
 USE SistemaTickets
 
-Drop table Operador;
+Drop table solicitante;
 
 Create Table solicitante (
 	id_solicitante INT PRIMARY KEY IDENTITY(1,1),
@@ -50,3 +50,10 @@ Create table Operador (
 );
 
 
+TRUNCATE TABLE solicitante;
+DBCC CHECKIDENT ('solicitante', RESEED, 0)
+
+select * from solicitante
+insert into solicitante values ('ola', 'ola', 'ola', 'a', 'a' );
+delete from solicitante where id_solicitante = 1;
+DELETE FROM solicitante;
