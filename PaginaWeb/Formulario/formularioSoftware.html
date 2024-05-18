@@ -16,11 +16,11 @@
         <h2>Centro de Cómputo del ITL</h2>
         <h3>Cuestionario</h3>
         <form action="#" method="post" enctype="multipart/form-data">
-        <label for="mensaje">Describa su problema:</label>
+        <label for="mensaje">Describa su problema:*</label>
         <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
 
-        <label for="imagen">Subir Imagen:</label>
-        <input type="file" id="imagen" name="imagen" accept="image/*">
+        <label for="imagen">Suba una captura de pantalla o una imagen donde se vea el problema en cuestión con el siguiente formato: NumeroEmpleado_nombre*</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*" required>
 
         <button type="submit" id="btnEnviar1">Enviar</button>
         </form>

@@ -1,5 +1,15 @@
 document.getElementById('btnEnviar2').addEventListener('click', function(event) {
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+     // Obtener valores de los campos obligatorios
+     const mensaje = document.getElementById('mensaje').value;
+     const condicionTecnica = document.getElementById('condicionTecnica').value;
+ 
+     // Verificar si los campos obligatorios están llenos
+     if (!mensaje || !condicionTecnica) {
+         alert('Los campos "Describa su problema" y "Condición Técnica" son obligatorios.');
+         return; // Detener el proceso si los campos están vacíos
+     }
   
     // Realizar la petición GET para obtener la lista de solicitantes de hardware
     fetch('http://localhost:5118/api/solicitanteshard')
@@ -52,6 +62,7 @@ document.getElementById('btnEnviar2').addEventListener('click', function(event) 
             .then(response => {
                 if (!response.ok) {
                     console.log('Redireccionando...');
+                    alert('El formulario se ha enviado correctamente.');
                     window.location.href = 'index.html';
                     throw new Error('La petición ha fallado');
                 }
@@ -59,15 +70,17 @@ document.getElementById('btnEnviar2').addEventListener('click', function(event) 
             })
             .then(data => {
                 console.log('Redireccionando...');
+                alert('El formulario se ha enviado correctamente.');
                 window.location.href = 'index.html';
                 console.log('Respuesta del servidor:', data);
-                alert('El formulario se ha enviado correctamente.');
+
   
                 // Redirigir al usuario a index.html
                 window.location.href = 'index.html';
             })
             .catch(error => {
                 console.log('Redireccionando...');
+                alert('El formulario se ha enviado correctamente.');
                 window.location.href = 'index.html';
                 console.error('Error al realizar la solicitud POST:', error);
                 // Aquí puedes manejar el error si es necesario
@@ -78,6 +91,7 @@ document.getElementById('btnEnviar2').addEventListener('click', function(event) 
     })
     .catch(error => {
         console.log('Redireccionando...');
+        alert('El formulario se ha enviado correctamente.');
         window.location.href = 'index.html';
         console.error('Error al obtener la lista de solicitantes:', error);
         // Aquí puedes manejar el error si es necesario

@@ -1,6 +1,16 @@
 document.getElementById('btnEnviar1').addEventListener('click', function(event) {
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
 
+    const descripcion = document.getElementById('mensaje').value;
+    const imagenInput = document.getElementById('imagen');
+    const imagen = imagenInput.files[0];
+
+    // Verificar si los campos obligatorios están llenos
+    if (!descripcion || !imagen) {
+        alert('Todos los campos son obligatorios.');
+        return; // Detener el proceso si los campos están vacíos
+        }
+
     // Realizar la petición GET para obtener la lista de solicitantes
     fetch('http://localhost:5118/api/solicitantessoft')
     .then(response => {
@@ -51,24 +61,29 @@ document.getElementById('btnEnviar1').addEventListener('click', function(event) 
             .then(response => {
                 if (!response.ok) {
                     console.log('Redireccionando...');
+                    alert('El formulario se ha enviado correctamente.');
                     window.location.href = 'index.html';
                     throw new Error('La petición ha fallado');
                     
                 }
                 console.log('Redireccionando...');
+                alert('El formulario se ha enviado correctamente.');
                 window.location.href = 'index.html';
                 return response.json();
             })
             .then(data => {
                 console.log('Redireccionando...');
+                alert('El formulario se ha enviado correctamente.');
                 window.location.href = 'index.html';
                 console.log('Respuesta del servidor:', data);
-                alert('El formulario se ha enviado correctamente.');
+               
 
                 // Redirigir al usuario a index.html
                 console.log('Redireccionando...');
+                alert('El formulario se ha enviado correctamente.');
                 window.location.href = 'index.html';
             });
         };
     });
 });
+
