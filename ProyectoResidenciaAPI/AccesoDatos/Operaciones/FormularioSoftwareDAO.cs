@@ -34,8 +34,10 @@ namespace AccesoDatos.Operaciones
                     formularioSoftware.Estatus,
                     Solicitante = solicitante != null ? new
                     {
+                        solicitante.NombreSolicitanteSoft,
                         solicitante.CorreoSoft,
                         solicitante.TipoSolicitanteSoft,
+                        solicitante.AreaSoft,
                         solicitante.TipoFalloSoft
                     } : null
                 };
@@ -74,6 +76,36 @@ namespace AccesoDatos.Operaciones
                 return null;
             }
         }
+
+        // Método para seleccionar solo los campos NombreArchivo y FileData
+        public List<dynamic> SeleccionarNombreArchivoYFileData()
+        {
+            var resultados = new List<dynamic>();
+
+            try
+            {
+                var formulariosSoftware = contexto.FormularioSoftwares.ToList();
+
+                foreach (var formularioSoftware in formulariosSoftware)
+                {
+                    var resultado = new
+                    {
+                        formularioSoftware.IdFormularioSoftware,
+                        formularioSoftware.NombreArchivo,
+                        formularioSoftware.FileData,
+                        formularioSoftware.Estatus
+                    };
+                    resultados.Add(resultado);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores aquí
+            }
+
+            return resultados;
+        }
+
 
         // Método para insertar un nuevo formulario de software
         public bool Insertar(string descripcion, string nombreArchivo, byte[] fileData, DateTime? fechaPre, DateTime? fechaPost, bool? estatus, int idSolicitanteSoft, int idOperador)

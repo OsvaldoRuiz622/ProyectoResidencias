@@ -40,7 +40,9 @@ namespace AccesoDatos.Operaciones
                         Solicitante = new
                         {
                             solicitante.NombreSolicitanteHard,
+                            solicitante.CorreoHard,
                             solicitante.TipoSolicitanteHard,
+                            solicitante.AreaHard,
                             solicitante.TipoFalloHard
                         }
                     };

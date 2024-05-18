@@ -72,6 +72,12 @@ namespace WebApi.Controllers
                 return StatusCode(500, "Error interno del servidor: " + ex.Message);
             }
         }
+        [HttpGet("formulariossoftware/nombrearchivo-filedata")]
+        public IActionResult GetNombreArchivoYFileData()
+        {
+            var resultados = formularioSoftwareDAO.SeleccionarNombreArchivoYFileData();
+            return Ok(resultados);
+        }
 
         [HttpDelete("formulariossoftware/{id}")]
         public IActionResult EliminarFormularioSoftware(int id)
