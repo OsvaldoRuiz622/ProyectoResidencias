@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import requests
+import os
+import base64
 
 class ControlGeneralApi(tk.Frame):
     def __init__(self, master=None):
@@ -17,20 +19,24 @@ class ControlGeneralApi(tk.Frame):
         self.tree = ttk.Treeview(self, columns=(
             "ID",
             "Descripción",
-            "Fecha Pre",
-            "Fecha Post",
+            "Nombre Solicitante",
             "Correo Solicitante",
+            "Área Solicitante",
             "Tipo Solicitante",
             "Tipo Fallo",
+            "Fecha Pre",
+            "Fecha Post",
             "Estatus"
         ), show="headings")
         self.tree.heading("ID", text="ID", anchor="w")
         self.tree.heading("Descripción", text="Descripción", anchor="w")
-        self.tree.heading("Fecha Pre", text="Fecha Pre", anchor="w")
-        self.tree.heading("Fecha Post", text="Fecha Post", anchor="w")
+        self.tree.heading("Nombre Solicitante", text="Nombre Solicitante", anchor="w")
         self.tree.heading("Correo Solicitante", text="Correo Solicitante", anchor="w")
+        self.tree.heading("Área Solicitante", text="Área Solicitante", anchor="w")
         self.tree.heading("Tipo Solicitante", text="Tipo Solicitante", anchor="w")
         self.tree.heading("Tipo Fallo", text="Tipo Fallo", anchor="w")
+        self.tree.heading("Fecha Pre", text="Fecha Pre", anchor="w")
+        self.tree.heading("Fecha Post", text="Fecha Post", anchor="w")
         self.tree.heading("Estatus", text="Estatus", anchor="w")
         self.tree.pack(expand=True, fill="both")
 
@@ -39,6 +45,9 @@ class ControlGeneralApi(tk.Frame):
 
         self.edit_button = tk.Button(self, text="Editar", command=self.editar_registro)
         self.edit_button.pack()
+
+        self.download_button = tk.Button(self, text="Descargar Imágenes", command=self.descargar_imagenes)
+        self.download_button.pack()
 
         self.update_table()
         self.ventana_edicion = None  # Inicializamos la variable de la ventana de edición
@@ -59,12 +68,14 @@ class ControlGeneralApi(tk.Frame):
             self.tree.insert("", "end", values=(
                 item["idFormularioSoftware"],
                 item["descripcion"],
-                item["fechaPre"],
-                item["fechaPost"],
+                item["solicitante"]["nombreSolicitanteSoft"],
                 item["solicitante"]["correoSoft"],
+                item["solicitante"]["areaSoft"],
                 item["solicitante"]["tipoSolicitanteSoft"],
                 item["solicitante"]["tipoFalloSoft"],
-                item["estatus"]
+                item["fechaPre"],
+                item["fechaPost"],
+                estatus
             ), tags=(tag,))
 
         # Configurar el color de fondo de las filas según la etiqueta
@@ -90,24 +101,6 @@ class ControlGeneralApi(tk.Frame):
             return response.json()
         else:
             return None
-
-    def guardar_cambios(self, id_formulario, descripcion, fecha_pre, fecha_post, estatus, correo_soft):
-        data = {
-            "descripcion": descripcion,
-            "fechaPre": fecha_pre,
-            "fechaPost": fecha_post,
-            "estatus": estatus,
-            "idSolicitanteSoft": id_formulario,  
-            "idOperador": 1 
-        }
-        url = f"http://localhost:5118/api/formulariossoftware/{id_formulario}"
-        response = requests.put(url, json=data)
-        if response.status_code == 200:
-            messagebox.showinfo("Éxito", "Los cambios se guardaron correctamente")
-            self.update_table()  
-            self.ventana_edicion.destroy()  # Cerrar la ventana de edición después de guardar cambios
-        else:
-            messagebox.showerror("Error", "No se pudieron guardar los cambios")
 
     def mostrar_ventana_edicion(self, formulario_data):
         self.ventana_edicion = tk.Toplevel(self.master)
@@ -141,6 +134,85 @@ class ControlGeneralApi(tk.Frame):
                                                                        estatus_var.get(),
                                                                        formulario_data["solicitante"]["correoSoft"]))
         guardar_button.grid(row=4, column=1, padx=5, pady=5)
+
+    def guardar_cambios(self, id_formulario, descripcion, fecha_pre, fecha_post, estatus, correo_soft):
+        data = {
+            "descripcion": descripcion,
+            "fechaPre": fecha_pre,
+            "fechaPost": fecha_post,
+            "estatus": estatus,
+            "idSolicitanteSoft": id_formulario,  
+            "idOperador": 1 
+        }
+        url = f"http://localhost:5118/api/formulariossoftware/{id_formulario}"
+        response = requests.put(url, json=data)
+        if response.status_code == 200:
+            messagebox.showinfo("Éxito", "Los cambios se guardaron correctamente")
+            self.update_table()  
+            self.ventana_edicion.destroy()  # Cerrar la ventana de edición después de guardar cambios
+        else:
+            messagebox.showerror("Error", "No se pudieron guardar los cambios")
+
+    def descargar_imagenes(self):
+        # Instanciamos la clase DescargarImagenes y llamamos al método descargar_imagenes
+        downloader = DescargarImagenes(self.master)
+        downloader.descargar_imagenes()
+
+class DescargarImagenes:
+    def __init__(self, ventana):
+        self.ventana = ventana
+
+    def descargar_imagenes(self):
+        # Ruta de la carpeta donde se guardarán las imágenes
+        path = r'C:\Users\osval\Desktop\GitProyect\ProyectoResidencias\PaginaWeb\imagenesformulario'
+
+        # Eliminar todos los archivos de la carpeta antes de proceder
+        for filename in os.listdir(path):
+            filepath = os.path.join(path, filename)
+            try:
+                os.remove(filepath)
+                print(f'Archivo {filename} eliminado')
+            except Exception as e:
+                print(f'Error al eliminar el archivo {filename}: {e}')
+
+        # URL de la API para obtener los archivos codificados en base64
+        api_url = 'http://localhost:5118/api/formulariossoftware/nombrearchivo-filedata'
+
+        # Realiza la solicitud GET a la API
+        response = requests.get(api_url)
+
+        # Verifica que la solicitud fue exitosa
+        if response.status_code == 200:
+            # Convierte la respuesta JSON en una lista de diccionarios
+            data = response.json()
+            
+            # Itera sobre cada formulario en la respuesta
+            for formulario in data:
+                id_formulario_software = formulario['idFormularioSoftware']
+                nombre_archivo = formulario['nombreArchivo']
+                file_data_base64 = formulario['fileData']
+                estatus = formulario['estatus']
+                
+                # Si el estatus es False y hay datos codificados en base64, decodifícalos y guarda el archivo
+                if not estatus and file_data_base64:
+                    try:
+                        # Decodifica los datos codificados en base64
+                        file_data = base64.b64decode(file_data_base64)
+                        
+                        # Anteponer el id_formulario_software al nombre del archivo
+                        nombre_archivo_con_id = f"{id_formulario_software}_{nombre_archivo}"
+                        
+                        # Guarda el contenido de los datos binarios en un archivo local
+                        with open(os.path.join(path, nombre_archivo_con_id), 'wb') as file:
+                            file.write(file_data)
+                            
+                        print(f'Archivo guardado para el formulario {id_formulario_software} en: {path}\\{nombre_archivo_con_id}')
+                    except Exception as e:
+                        print(f'Error al decodificar los datos del formulario {id_formulario_software}: {e}')
+                else:
+                    print(f'No se guardará archivo para el formulario {id_formulario_software}')
+        else:
+            print(f'Error al obtener los datos de la API: {response.status_code} - {response.text}')
 
 if __name__ == "__main__":
     root = tk.Tk()

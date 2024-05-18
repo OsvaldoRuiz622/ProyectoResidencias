@@ -23,7 +23,7 @@ class ControlGeneralHardware(tk.Frame):
         self.tree = ttk.Treeview(frame_tabla, columns=(
             "ID", "Cantidad", "Marca", "No. Serie", "Descripción", "Condición",
             "Observación Pre", "Observación Post", "Fecha Pre", "Fecha Post",
-            "Nombre Solicitante", "Tipo Solicitante", "Tipo Fallo", "Estatus"
+            "Nombre Solicitante", "Correo Solicitante", "Área Solicitante", "Tipo Solicitante", "Tipo Fallo", "Estatus"
         ), show="headings")
 
         # Configurar el ancho de las columnas
@@ -39,6 +39,8 @@ class ControlGeneralHardware(tk.Frame):
             "Fecha Pre": 150,
             "Fecha Post": 150,
             "Nombre Solicitante": 150,
+            "Correo Solicitante": 200,
+            "Área Solicitante": 250,
             "Tipo Solicitante": 150,
             "Tipo Fallo": 100,
             "Estatus": 100
@@ -118,6 +120,8 @@ class ControlGeneralHardware(tk.Frame):
                 item["fechaPreHard"],
                 item["fechaPostHard"],
                 item["solicitante"]["nombreSolicitanteHard"],
+                item["solicitante"]["correoHard"],  # Nuevo campo
+                item["solicitante"]["areaHard"],    # Nuevo campo
                 item["solicitante"]["tipoSolicitanteHard"],
                 item["solicitante"]["tipoFalloHard"],
                 item["estatusHard"]

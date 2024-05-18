@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 from control_general import ControlGeneralApi
 from control_general_hardware import ControlGeneralHardware
 from estadisticas import Estadisticas
+from descifrarImagen import DescargarImagenes
 
 # Funciones para los botones
 def boton1_callback():
@@ -24,7 +25,7 @@ def boton3_callback():
 
     control_general_hardware = ControlGeneralHardware(ventana_control_general_hardware)
 
-   
+    
 # Función para cerrar la ventana
 def cerrar_ventana():
     ventana.destroy()
@@ -34,7 +35,7 @@ ventana = tk.Tk()
 ventana.title("Sistema de Tickets del Centro de Computo del ITL")
 
 # Dimensiones de la ventana principal
-ancho_ventana = 530
+ancho_ventana = 550
 alto_ventana = 300
 ventana.geometry(f"{ancho_ventana}x{alto_ventana}")
 
@@ -44,7 +45,7 @@ frame_principal.pack(expand=True, fill='both')
 
 # Cargar imagen para el banner
 imagen_banner = Image.open("banner.png")  # Ruta de imagen
-imagen_banner = imagen_banner.resize((ancho_ventana, 50), Image.ADAPTIVE)  # Ajustar tamaño
+imagen_banner = imagen_banner.resize((700, 60), Image.ADAPTIVE)  # Ajustar tamaño
 imagen_banner = ImageTk.PhotoImage(imagen_banner)
 
 # Mostrar el banner en un label
@@ -60,6 +61,7 @@ boton2.pack(side="right", padx=20, pady=20)
 
 boton3 = tk.Button(frame_principal, text="Control General Hardware", command=boton3_callback, padx=10, pady=5)
 boton3.pack(side="right", padx=20, pady=20)
+
 
 # Crear un frame para el botón de cierre
 frame_cierre = tk.Frame(ventana)
