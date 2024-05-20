@@ -3,7 +3,6 @@ from PIL import Image, ImageTk
 from control_general import ControlGeneralApi
 from control_general_hardware import ControlGeneralHardware
 from estadisticas import Estadisticas
-from descifrarImagen import DescargarImagenes
 
 # Funciones para los botones
 def boton1_callback():
@@ -45,7 +44,7 @@ frame_principal.pack(expand=True, fill='both')
 
 # Cargar imagen para el banner
 imagen_banner = Image.open("banner.png")  # Ruta de imagen
-imagen_banner = imagen_banner.resize((700, 60), Image.ADAPTIVE)  # Ajustar tamaño
+imagen_banner = imagen_banner.resize((550, 60), Image.ADAPTIVE)  # Ajustar tamaño
 imagen_banner = ImageTk.PhotoImage(imagen_banner)
 
 # Mostrar el banner en un label

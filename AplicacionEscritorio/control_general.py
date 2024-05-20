@@ -157,6 +157,7 @@ class ControlGeneralApi(tk.Frame):
         # Instanciamos la clase DescargarImagenes y llamamos al método descargar_imagenes
         downloader = DescargarImagenes(self.master)
         downloader.descargar_imagenes()
+        messagebox.showinfo("Éxito", "Las imagenes se guardaron corectamente")
 
 class DescargarImagenes:
     def __init__(self, ventana):
@@ -209,6 +210,7 @@ class DescargarImagenes:
                         print(f'Archivo guardado para el formulario {id_formulario_software} en: {path}\\{nombre_archivo_con_id}')
                     except Exception as e:
                         print(f'Error al decodificar los datos del formulario {id_formulario_software}: {e}')
+                    
                 else:
                     print(f'No se guardará archivo para el formulario {id_formulario_software}')
         else:

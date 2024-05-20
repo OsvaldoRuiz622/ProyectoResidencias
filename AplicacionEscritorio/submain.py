@@ -30,7 +30,7 @@ ventana = tk.Tk()
 ventana.title("Sistema de Tickets del Centro de Computo del ITL")
 
 # Dimensiones de la ventana principal
-ancho_ventana = 700
+ancho_ventana = 550
 alto_ventana = 250
 ventana.geometry(f"{ancho_ventana}x{alto_ventana}")
 
@@ -40,7 +40,7 @@ frame_principal.pack(expand=True, fill='both')
 
 # Cargar imagen para el banner
 imagen_banner = Image.open("banner.png")  # Ruta de imagen
-imagen_banner = imagen_banner.resize((700, 60), Image.ADAPTIVE)  # Ajustar tamaño
+imagen_banner = imagen_banner.resize((550, 60), Image.ADAPTIVE)  # Ajustar tamaño
 imagen_banner = ImageTk.PhotoImage(imagen_banner)
 
 # Mostrar el banner en un label
