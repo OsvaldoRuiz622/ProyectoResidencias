@@ -25,24 +25,6 @@ Al hacer este sistema se beneficiará tanto a los operadores del centro de cómp
 El objetivo general del proyecto es desarrollar sistema de tickets anidado a un portal web del Campus 1 para ingresar y administrar solicitudes de soporte técnico en el Instituto Tecnológico de León, con el fin de automatizar y gestionar los tickets.
 
 
-En el capítulo 1 se desglosan los antecedentes generales del proyecto, se mencionan aspectos generales de la institución de educación superior y como se piensa mejorar el sistema actual.
-
-
-En el capítulo 2 se desarrolla todo el marco teórico del proyecto, se definen los entornos de desarrollo, los lenguajes de programación, arquitecturas y modelos de programación y gestores de bases de datos que se usarán en el proyecto.
-
-
-En el capítulo 3 se mencionan los requerimientos del sistema, como se modelo la base de datos y como operan los módulos de todo el sistema.
-
-
-En el capítulo 4 se muestra el diseño general del sistema.
-
-
-En el capítulo 5 se menciona toda la arquitectura del sistema, desde la base de datos hasta la aplicación de escritorio y el formulario web.
-
-
-En el capítulo 6 se muestran los diseños de pruebas y como se aplicaron con el fin de ver como funcionó todo el sistema.
-
-
 Se muestran los alcances y limitaciones que tendrá el proyecto.
 
 
